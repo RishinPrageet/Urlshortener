@@ -1,19 +1,17 @@
-package com.rishin.urlshortener.util;
+package com.rishin.urlshortener.service.strategy;
 
 import java.security.SecureRandom;
 
-public final class Base62Encoder {
+import org.springframework.stereotype.Component;
 
+@Component
+public class RandomBase62Generator implements ShortCodeGenerator {
+    
     private static final String ALPHABET =
             "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
     private static final SecureRandom RANDOM = new SecureRandom();
-
-    private Base62Encoder() {
-        // Prevent instantiation
-    }
-
-    public static String getShortCode() {
+    @Override
+    public  String generate() {
         StringBuilder sb = new StringBuilder(7);
 
         for (int i = 0; i < 7; i++) {
@@ -22,4 +20,5 @@ public final class Base62Encoder {
 
         return sb.toString();
     }
+
 }

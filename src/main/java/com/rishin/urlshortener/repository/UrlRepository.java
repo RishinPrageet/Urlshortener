@@ -11,4 +11,5 @@ import com.rishin.urlshortener.model.Url;
 public interface UrlRepository extends JpaRepository<Url, Long>{
     Optional<Url> findUrlByShortCode(String shortCode);
     Optional<Url> findUrlByOriginalUrl(String originalUrl);
+
 }

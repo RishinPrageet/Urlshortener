@@ -38,7 +38,7 @@ public class UrlController {
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
         Url url = urlService.getUrlByShortCode(shortCode);
-
+        System.out.println("Original URL: " + url.getOriginalUrl());
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(url.getOriginalUrl()))
                 .build();

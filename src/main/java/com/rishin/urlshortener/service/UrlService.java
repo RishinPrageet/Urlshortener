@@ -1,8 +1,5 @@
 package com.rishin.urlshortener.service;
 
-import java.time.LocalDateTime;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rishin.urlshortener.mapper.UrlMapper;
@@ -17,18 +14,22 @@ public class UrlService {
     private final UrlRepository urlRepository;
     private final ShortCodeGenerator shortCodeGenerator;
     private final UrlMapper urlMapper;
+    private ClickCountService clickCountService;
 
    
-    public UrlService(UrlRepository urlRepository,ShortCodeGenerator shortCodeGenerator,UrlMapper urlMapper){
+    public UrlService(UrlRepository urlRepository,ShortCodeGenerator shortCodeGenerator,UrlMapper urlMapper,ClickCountService clickCountService){
         this.urlRepository=urlRepository;
         this.shortCodeGenerator = shortCodeGenerator;
         this.urlMapper = urlMapper;
+        this.clickCountService=clickCountService;
     }
 
-    public Url getUrlByShortCode(String shortCode) {
-        return urlRepository.findUrlByShortCode(shortCode)
-                            .orElseThrow(() -> new RuntimeException("Short code not found"));
-    }
+public Url getUrlByShortCode(String shortCode) {
+    Url url = urlRepository.findUrlByShortCode(shortCode)
+                           .orElseThrow(() -> new RuntimeException("Short code not found"));
+    clickCountService.increment(shortCode); // fire-and-forget
+    return url;
+}
     public Url createShortCode(String originalUrl){
             originalUrl = UrlUtils.normalizeUrl(originalUrl);
 

@@ -7,8 +7,8 @@ public class UrlDto {
     public String getOrginalUrl() {
         return originalUrl;
     }
-    public void setOrginalUrl(String orginalUrl) {
-        this.originalUrl = orginalUrl;
+    public void setOrginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
     }
     public String getShortCode() {
         return shortCode;

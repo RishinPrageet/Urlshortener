@@ -17,7 +17,7 @@ public class UrlService {
     private final ShortCodeGenerator shortCodeGenerator;
     private final UrlMapper urlMapper;
 
-    @Autowired
+   
     public UrlService(UrlRepository urlRepository,ShortCodeGenerator shortCodeGenerator,UrlMapper urlMapper){
         this.urlRepository=urlRepository;
         this.shortCodeGenerator = shortCodeGenerator;
@@ -28,12 +28,12 @@ public class UrlService {
         return urlRepository.findUrlByShortCode(shortCode)
                             .orElseThrow(() -> new RuntimeException("Short code not found"));
     }
-    public String createShortCode(String originalUrl){
+    public Url createShortCode(String originalUrl){
         String shortCode;
         do {
-            String shortCode = shortCodeGenerator.generate();
+            shortCode = shortCodeGenerator.generate();
         } while(urlRepository.findUrlByShortCode(shortCode).isPresent());
-        Url url = urlMapper(originalUrl,shortCode);
+        Url url = urlMapper.toEntity(originalUrl,shortCode);
         return urlRepository.save(url);
     }
 

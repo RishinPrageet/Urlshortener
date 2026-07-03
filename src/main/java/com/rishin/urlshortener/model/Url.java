@@ -16,7 +16,6 @@ public class Url{
 private Long id;
 
 private String originalUrl; 
-
 private String shortCode;
 
 private LocalDateTime createdAt;

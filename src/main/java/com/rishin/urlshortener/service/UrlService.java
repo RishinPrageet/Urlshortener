@@ -14,7 +14,7 @@ public class UrlService {
     private final UrlRepository urlRepository;
     private final ShortCodeGenerator shortCodeGenerator;
     private final UrlMapper urlMapper;
-    private ClickCountService clickCountService;
+    private final ClickCountService clickCountService;
 
    
     public UrlService(UrlRepository urlRepository,ShortCodeGenerator shortCodeGenerator,UrlMapper urlMapper,ClickCountService clickCountService){

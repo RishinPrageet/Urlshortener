@@ -9,6 +9,7 @@ import com.rishin.urlshortener.mapper.UrlMapper;
 import com.rishin.urlshortener.model.Url;
 import com.rishin.urlshortener.repository.UrlRepository;
 import com.rishin.urlshortener.service.strategy.ShortCodeGenerator;
+import com.rishin.urlshortener.util.UrlUtils;
 
 @Service
 public class UrlService {
@@ -29,6 +30,11 @@ public class UrlService {
                             .orElseThrow(() -> new RuntimeException("Short code not found"));
     }
     public Url createShortCode(String originalUrl){
+            originalUrl = UrlUtils.normalizeUrl(originalUrl);
+
+            if (!UrlUtils.isValidUrl(originalUrl)) {
+                throw new IllegalArgumentException("Invalid URL");
+            }
         String shortCode;
         do {
             shortCode = shortCodeGenerator.generate();

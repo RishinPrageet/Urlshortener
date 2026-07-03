@@ -8,10 +8,10 @@ public class UrlResponseDto {
         this.originalUrl=originalUrl;
         this.shortCode = shortCode;
     }
-    public String getOriginalUrl() {
+    public String getOrginalUrl() {
         return originalUrl;
     }
-    public void setOriginalUrl(String originalUrl) {
+    public void setOrginalUrl(String originalUrl) {
         this.originalUrl = originalUrl;
     }
     public String getShortCode() {

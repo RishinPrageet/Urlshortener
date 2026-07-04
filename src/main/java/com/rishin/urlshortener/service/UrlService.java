@@ -2,6 +2,8 @@ package com.rishin.urlshortener.service;
 
 import org.springframework.stereotype.Service;
 
+import com.rishin.urlshortener.exception.InvalidUrlException;
+import com.rishin.urlshortener.exception.UrlNotFoundException;
 import com.rishin.urlshortener.mapper.UrlMapper;
 import com.rishin.urlshortener.model.Url;
 import com.rishin.urlshortener.repository.UrlRepository;
@@ -24,17 +26,17 @@ public class UrlService {
         this.clickCountService=clickCountService;
     }
 
-public Url getUrlByShortCode(String shortCode) {
-    Url url = urlRepository.findUrlByShortCode(shortCode)
-                           .orElseThrow(() -> new RuntimeException("Short code not found"));
-    clickCountService.increment(shortCode); // fire-and-forget
-    return url;
-}
+    public Url getUrlByShortCode(String shortCode) {
+        Url url = urlRepository.findUrlByShortCode(shortCode)
+                            .orElseThrow(() -> new UrlNotFoundException("Short code not found: " + shortCode));
+        clickCountService.increment(shortCode); // fire-and-forget
+        return url;
+    }
     public Url createShortCode(String originalUrl){
             originalUrl = UrlUtils.normalizeUrl(originalUrl);
 
             if (!UrlUtils.isValidUrl(originalUrl)) {
-                throw new IllegalArgumentException("Invalid URL");
+                throw new InvalidUrlException("Invalid URL: " + originalUrl);
             }
         String shortCode;
         do {
